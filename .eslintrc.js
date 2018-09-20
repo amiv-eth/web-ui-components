@@ -14,4 +14,16 @@ module.exports = {
         webpack: {},
     },
   },
+  rules: {
+    "no-console": 1,
+    "prefer-destructuring": 1,
+    "no-underscore-dangle": 0,
+    "object-curly-newline": [ "error", {
+        ObjectExpression: { multiline: true, consistent: true },
+        ObjectPattern: { multiline: true, consistent: true },
+        ImportDeclaration: { minProperties: 7, consistent: true },
+        ExportDeclaration: { minProperties: 7, consistent: true },
+    }],
+    "max-len": [ "error", { "code": 100, ignorePattern: ".*<svg.+>" }],
+  }
 };
