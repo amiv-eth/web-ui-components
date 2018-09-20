@@ -1,6 +1,6 @@
 {
   "name": "amiv-web-ui-components",
-  "version": "0.0",
+  "version": "0.0.1",
   "description": "A collection of components usable with mithril and polythene.",
   "license": "MIT",
   "main": "index.js",
