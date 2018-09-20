@@ -20,7 +20,7 @@ Input fields are all set up to display errors. These errors are e.g. set by the 
 ![error](https://gitlab.ethz.ch/amiv/web-ui-components/raw/master/docs/inputfields/texterror.png)
 
 ### Number Input
-number input is not very well supported by modern browsers, use with causion.
+number input is not very well supported by modern browsers, use with caution.
 
 ![number input](https://gitlab.ethz.ch/amiv/web-ui-components/raw/master/docs/inputfields/number.png)  
 
