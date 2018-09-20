@@ -22,12 +22,6 @@ const ClearButton = {
     events: { onclick: attrs.clear },
   }),
 };
-const SearchIcon = {
-  view: () => m(IconButton, {
-    icon: { svg: m.trust(icons.search) },
-    inactive: true,
-  }),
-};
 
 
 class SearchField {
@@ -40,34 +34,34 @@ class SearchField {
     this.leave = () => this.value('');
   }
 
-  view({ state, attrs }) {
+  view({ attrs }) {
     // incoming value and focus added for result list example:
-    const value = attrs.value !== undefined ? attrs.value : state.value();
+    const value = attrs.value !== undefined ? attrs.value : this.value();
     return m(Search, Object.assign(
       {},
       {
         textfield: {
           label: 'type here',
           onChange: (newState) => {
-            state.value(newState.value);
-            state.setInputState(newState.setInputState);
+            this.value(newState.value);
+            this.setInputState(newState.setInputState);
             // onChange callback added for result list example:
-            if (attrs.onChange) attrs.onChange(newState, state.setInputState);
+            if (attrs.onChange) attrs.onChange(newState, this.setInputState);
           },
           value,
           defaultValue: attrs.defaultValue,
         },
         buttons: {
           focus: {
-            before: m(BackButton, { leave: state.leave }),
+            before: m(BackButton, { leave: this.leave }),
           },
           focus_dirty: {
-            before: m(BackButton, { leave: state.leave }),
-            after: m(ClearButton, { clear: state.clear }),
+            before: m(BackButton, { leave: this.leave }),
+            after: m(ClearButton, { clear: this.clear }),
           },
           dirty: {
-            before: m(BackButton, { leave: state.leave }),
-            after: m(ClearButton, { clear: state.clear }),
+            before: m(BackButton, { leave: this.leave }),
+            after: m(ClearButton, { clear: this.clear }),
           },
         },
       },
@@ -77,11 +71,10 @@ class SearchField {
 }
 
 export default class SelectList {
-
   /*
-   * A selection field where the value can be choosen from a large list of items 
+   * A selection field where the value can be choosen from a large list of items
    * loaded from an API resource (e.g. select a user or an event).
-   * 
+   *
    * Attrs:
    *   controller: a `datalistcontroller`
    *     used as a controller for the list state

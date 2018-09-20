@@ -5,7 +5,7 @@ import { TextField } from 'polythene-mithril';
 export class textInput {
   /*
    * text input field with error handling
-   * 
+   *
    * Attrs:
    *   name: string
    *     key assigned to this input
@@ -52,7 +52,7 @@ export class textInput {
 export class numInput extends textInput {
   /*
    * number input field with error handling
-   * 
+   *
    * Attrs:
    *   name: string
    *     key assigned to this input
@@ -90,7 +90,7 @@ export class numInput extends textInput {
 export class datetimeInput {
   /*
    * input field for datetime with error handling
-   * 
+   *
    * Attrs:
    *   name: string
    *     key assigned to this input
@@ -201,7 +201,7 @@ export class datetimeInput {
 export class fileInput {
   /*
    * file input field with error handling
-   * 
+   *
    * Attrs:
    *   name: string
    *     key assigned to this input
@@ -237,7 +237,6 @@ export class fileInput {
           // as we only accept one file, it is always the first element
           // of the list
           this.file = file;
-          console.log(this.file);
           this.onChangeCallback(this.name, this.file);
         }
       },

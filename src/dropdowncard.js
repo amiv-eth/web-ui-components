@@ -1,7 +1,9 @@
+import m from 'mithril';
+import { Toolbar, IconButton, ToolbarTitle, Card } from 'polythene-mithril';
 import icons from './icons';
 
 // a card that is usually collapsed, but pops out when clicked on the title
-export class DropdownCard {
+export default class DropdownCard {
   constructor() {
     this.expand = false;
   }

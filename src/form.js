@@ -1,9 +1,7 @@
 import m from 'mithril';
 import Ajv from 'ajv';
-import { Checkbox, IconButton, Toolbar, ToolbarTitle, Button } from 'polythene-mithril';
+import { Checkbox } from 'polythene-mithril';
 import { textInput, datetimeInput, numInput } from './inputFields';
-import icons from './icons';
-import { colors } from '../style';
 
 export default class Form {
   /**
@@ -38,8 +36,7 @@ export default class Form {
    */
   setSchema(schema) {
     // clean the schema of any keys that ajv does not like
-    const objectSchema = schema.definitions[
-      objectNameForResource[this.resource]];
+    const objectSchema = Object.assign({}, schema);
     // console.log(objectSchema);
     // filter out any field that is not understood by the validator tool
     Object.keys(objectSchema.properties).forEach((property) => {

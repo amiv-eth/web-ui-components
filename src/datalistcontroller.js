@@ -1,20 +1,19 @@
 import m from 'mithril';
 import Stream from 'mithril/stream';
-import { ResourceHandler } from './auth';
-import { debounce } from './utils';
+import debounce from './debounce';
 
 export default class DatalistController {
   /*
    * Controller for a list of data from a python-eve REST-API.
-   * 
+   *
    * Args:
    *   get: function(query, search)
-   *     performs a get request to some resource with the given query and search. Search is a 
-   *     simple string that has to be defined by the get-function to perform any kind of string-matching
-   *     that makes sense for the represented data
+   *     performs a get request to some resource with the given query and search. Search is a
+   *     simple string that has to be defined by the get-function to perform any kind of
+   *     string-matching that makes sense for the represented data
    *   query: object
    *     any initial query
-   *   
+   *
    */
   constructor(get, query = {}) {
     this.get = get;
@@ -107,10 +106,10 @@ export default class DatalistController {
 
   /*
    *  Set Filters applied to the query.
-   *  Filters a part of the 'where'-query that can be set independently from the standard where query.
-   *  The main usecase are filters on the list-items that can be quickly turned on and off without affecting the
-   *  general query settings.
-   *  
+   *  Filters a part of the 'where'-query that can be set independently from the standard where
+   *  query. The main usecase are filters on the list-items that can be quickly turned on and
+   *  off without affecting the general query settings.
+   *
    *  Args:
    *    filters object
    *    In the python-eve format of a where-query
