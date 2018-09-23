@@ -51,7 +51,7 @@ export default class DatalistController {
     const query = Object.assign({}, this.query);
     query.max_results = 10;
     query.page = pageNum;
-    query.where = { ...this.filter, ...this.query.where };
+    query.where = Object.assign({}, this.filter, this.query.where);
     // remove where again if it is empty
     if (Object.keys(query.where).length === 0) delete query.where;
 
