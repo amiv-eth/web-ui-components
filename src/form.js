@@ -16,7 +16,7 @@ export default class Form {
    *                             first validation]
    * @param  {object} initialData   [initial data for the form]
    */
-  constructor(vnode, schema, valid = true, initialData = {}) {
+  constructor(vnode, valid = true, initialData = {}) {
     this.data = initialData;
     this.changed = false;
     // state for validation
