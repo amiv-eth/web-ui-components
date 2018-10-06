@@ -9,12 +9,10 @@ export default class Form {
    * - call constructor with vnode, resource, (valid, true by default)
    * - vnode.attrs.onfinish has to be a callback function that is called after
    *   the edit is finished
-   * @param  {object} vnode   [as provided by mithril]
-   * @param  {object} embedded  [any embedding query that should be added
-   *                             to API requests for this resource]
-   * @param  {Boolean} valid    [whether the view should be valid before the
-   *                             first validation]
-   * @param  {object} initialData   [initial data for the form]
+   *
+   * @param {object}  vnode        as provided by mithril
+   * @param {boolean} valid        whether the view should be valid before the first validation
+   * @param {object}  initialData  initial data for the form
    */
   constructor(vnode, valid = true, initialData = {}) {
     this.data = initialData;
@@ -31,8 +29,9 @@ export default class Form {
 
   /**
    * Sets the schema to validate this form.
+   * Uses [AJV](https://ajv.js.org/)
    *
-   * @param      {object}  schema  [jsonschema]
+   * @param {object}  schema  jsonschema
    */
   setSchema(schema) {
     // clean the schema of any keys that ajv does not like

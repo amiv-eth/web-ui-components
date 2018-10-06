@@ -3,20 +3,19 @@ import { TextField } from 'polythene-mithril';
 
 
 export class textInput {
-  /*
+  /**
    * text input field with error handling
    *
-   * Attrs:
-   *   name: string
-   *     key assigned to this input
-   *   getErrors: function()
-   *     This function is called at every view() to get the errors
-   *     for the input field. This allows updates of all form field errors
-   *     with a simple `m.redraw()`.
-   *   onChange: function(name, value)
-   *     this function is called every time that the value of the input changes
-   *   ...attrs:
-   *     any additional attributes are passed to the 'TextField' of polythene
+   * @param {object}   attrs              unless specified below, attrs will be
+   *   passed into the
+   *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
+   * @param {string}   attrs.name         key assigned to this input
+   * @param {function} attrs.getErrors    This function is called at every mithril
+   *   view() to get the errors for this input field. This allows updates of all form
+   *   field errors with a simple `m.redraw()`.
+   * @param {function} attrs.onChange     function (name, value) -
+   *   this function is called every time that the value of the input changes
+   *   (i.e. not the focus, as would happen with polythene inputs)
    */
   constructor({ attrs: { getErrors, name } }) {
     // Link the error-getting function from the binding
@@ -50,20 +49,19 @@ export class textInput {
 }
 
 export class numInput extends textInput {
-  /*
+  /**
    * number input field with error handling
    *
-   * Attrs:
-   *   name: string
-   *     key assigned to this input
-   *   getErrors: function()
-   *     This function is called at every view() to get the errors
-   *     for the input field. This allows updates of all form field errors
-   *     with a simple `m.redraw()`.
-   *   onChange: function(name, value)
-   *     this function is called every time that the value of the input changes
-   *   ...attrs:
-   *     any additional attributes are passed to the 'TextField' of polythene
+   * @param {object}   attrs              unless specified below, attrs will be
+   *   passed into the
+   *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
+   * @param {string}   attrs.name         key assigned to this input
+   * @param {function} attrs.getErrors    This function is called at every mithril
+   *   view() to get the errors for this input field. This allows updates of all form
+   *   field errors with a simple `m.redraw()`.
+   * @param {function} attrs.onChange     function (name, value) -
+   *   this function is called every time that the value of the input changes
+   *   (i.e. not the focus, as would happen with polythene inputs)
    */
   view({ attrs }) {
     // set display-settings accoridng to error-state
@@ -88,24 +86,20 @@ export class numInput extends textInput {
 }
 
 export class datetimeInput {
-  /*
+  /**
    * input field for datetime with error handling
    *
-   * Attrs:
-   *   name: string
-   *     key assigned to this input
-   *   label: string
-   *     label shown with this input field, has to fit into 200px
-   *   value: (optional)
-   *     initial value of the field, in form such that it is parsable by Date(value)
-   *   getErrors: function()
-   *     This function is called at every view() to get the errors
-   *     for the input field. This allows updates of all form field errors
-   *     with a simple `m.redraw()`.
-   *   onChange: function(name, value)
-   *     this function is called every time that the value of the input changes
-   *   ...attrs:
-   *     any additional attributes are passed to the 'TextField' of polythene
+   * @param {object}   attrs              unless specified below, attrs will be
+   *   passed into the
+   *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
+   * @param {string}   attrs.name         key assigned to this input
+   * @param {string}   attrs.label        label shown with this input field, has to fit into 200px
+   * @param {function} attrs.getErrors    This function is called at every mithril
+   *   view() to get the errors for this input field. This allows updates of all form
+   *   field errors with a simple `m.redraw()`.
+   * @param {function} attrs.onChange     function (name, value) -
+   *   this function is called every time that the value of the input changes
+   *   (i.e. not the focus, as would happen with polythene inputs)
    */
   constructor({ attrs: { getErrors, name, onChange } }) {
     // Link the error-getting function from the binding
@@ -199,22 +193,22 @@ export class datetimeInput {
 
 
 export class fileInput {
-  /*
+  /**
    * file input field with error handling
    *
-   * Attrs:
-   *   name: string
-   *     key assigned to this input
-   *   label: string
-   *     label shown with this input field, has to fit into 200px
-   *   getErrors: function()
-   *     This function is called at every view() to get the errors
-   *     for the input field. This allows updates of all form field errors
-   *     with a simple `m.redraw()`.
-   *   onChange: function(name, file)
-   *     this function is called every time that the file changes
-   *   ...attrs:
-   *     any additional attributes are passed to the 'TextField' of polythene
+   * @param {object}   attrs              unless specified below, attrs will be
+   *   passed into the
+   *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
+   * @param {string}   attrs.name         key assigned to this input
+   * @param {string}   attrs.label        label shown with this input field, has to fit into 200px
+   * @param            attrs.accept       accept attribute of the html file input tag, you can
+   *   specify fieltypes here.
+   * @param {function} attrs.getErrors    This function is called at every mithril
+   *   view() to get the errors for this input field. This allows updates of all form
+   *   field errors with a simple `m.redraw()`.
+   * @param {function} attrs.onChange     function (name, value) -
+   *   this function is called every time that the value of the input changes
+   *   (i.e. not the focus, as would happen with polythene inputs)
    */
   constructor({ attrs: { getErrors, name, onChange } }) {
     // Link the error-getting function from the binding

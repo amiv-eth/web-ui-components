@@ -2,18 +2,14 @@ import m from 'mithril';
 import Stream from 'mithril/stream';
 import debounce from './debounce';
 
+/** Controller for a list of data from a python-eve REST-API. */
 export default class DatalistController {
-  /*
-   * Controller for a list of data from a python-eve REST-API.
-   *
-   * Args:
-   *   get: function(query, search)
-   *     performs a get request to some resource with the given query and search. Search is a
-   *     simple string that has to be defined by the get-function to perform any kind of
-   *     string-matching that makes sense for the represented data
-   *   query: object
-   *     any initial query
-   *
+  /**
+   * @param {function} get   function(query, search),
+   *   performs a get request to some resource with the given query and search. Search is a
+   *   simple string that has to be defined by the get-function to perform any kind of
+   *   string-matching that makes sense for the represented data
+   * @param {object} query   any initial query
    */
   constructor(get, query = {}) {
     this.get = get;
@@ -33,6 +29,7 @@ export default class DatalistController {
     this.totalPages = null;
   }
 
+  /** Refresh the whole list */
   refresh() {
     this.stateCounter(this.stateCounter() + 1);
   }
@@ -45,6 +42,12 @@ export default class DatalistController {
     };
   }
 
+  /**
+   * Return the data of a specific page.
+   *
+   * @param      {int}   pageNum - The page number
+   * @return     {Promise}  The page data as a list.
+   */
   getPageData(pageNum) {
     // for some reason this is called before the object is instantiated.
     // check this and return nothing
@@ -64,7 +67,7 @@ export default class DatalistController {
     });
   }
 
-  /*
+  /**
    * Get all available pages
    */
   getFullList() {
@@ -104,15 +107,12 @@ export default class DatalistController {
     this.search = search;
   }
 
-  /*
+  /**
    *  Set Filters applied to the query.
    *  Filters a part of the 'where'-query that can be set independently from the standard where
    *  query. The main usecase are filters on the list-items that can be quickly turned on and
    *  off without affecting the general query settings.
-   *
-   *  Args:
-   *    filters object
-   *    In the python-eve format of a where-query
+   * @param {Object} filters - filters object, in the python-eve format of a where-query.
    */
   setFilter(filter) {
     this.filter = filter;
