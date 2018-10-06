@@ -94,12 +94,13 @@ export default class SelectList {
    *     Cancellation is only possible if this function is set.
    */
 
-  constructor({ attrs: { listTileAttrs } }) {
+  constructor({ attrs: { listTileAttrs, onSelect = false } }) {
     this.showList = false;
     this.searchValue = '';
     this.listTileAttrs = listTileAttrs;
     // initialize the Selection
     this.selected = null;
+    this.onSelect = onSelect;
   }
 
   onupdate({ attrs: { selection = null } }) {
@@ -133,7 +134,6 @@ export default class SelectList {
       controller,
       onSubmit = false,
       onCancel = false,
-      onSelect = false,
       selectedText,
     },
   }) {
@@ -144,7 +144,7 @@ export default class SelectList {
           ink: false,
           events: {
             onclick: () => {
-              if (onSelect) { this.onSelect(null); }
+              if (this.onSelect) { this.onSelect(null); }
               this.selected = null;
             },
           },
