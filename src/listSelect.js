@@ -70,7 +70,7 @@ class SearchField {
   }
 }
 
-export default class SelectList {
+export default class ListSelect {
   /*
    * A selection field where the value can be choosen from a large list of items
    * loaded from an API resource (e.g. select a user or an event).

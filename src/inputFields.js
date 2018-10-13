@@ -2,7 +2,7 @@ import m from 'mithril';
 import { TextField } from 'polythene-mithril';
 
 
-export class textInput {
+export class TextInput {
   /**
    * text input field with error handling
    *
@@ -48,7 +48,7 @@ export class textInput {
   }
 }
 
-export class numInput extends textInput {
+export class NumInput extends TextInput {
   /**
    * number input field with error handling
    *
@@ -85,7 +85,7 @@ export class numInput extends textInput {
   }
 }
 
-export class datetimeInput {
+export class DatetimeInput {
   /**
    * input field for datetime with error handling
    *
@@ -192,7 +192,7 @@ export class datetimeInput {
 }
 
 
-export class fileInput {
+export class FileInput {
   /**
    * file input field with error handling
    *
