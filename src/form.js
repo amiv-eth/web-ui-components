@@ -108,7 +108,6 @@ export default class Form {
 
           this.errors[field] = errors.map(error => error.message);
         });
-
       }
     }
     m.redraw();
