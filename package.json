@@ -20,7 +20,8 @@
     "polythene-core-css": "^1.2.0",
     "polythene-css": "^1.2.0",
     "polythene-mithril": "^1.2.0",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "@material/select": "^0.35.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
