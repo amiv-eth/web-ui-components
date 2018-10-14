@@ -10,7 +10,7 @@ export default class Select {
         onchange: ({ target: { value } }) => { onchange(value); },
         ...kwargs,
       }, options.map(option => m('option', { value: option }, option))),
-      m('label.mdc-floating-label', label),
+      m('label', { class: 'mdc-floating-label mdc-floating-label--float-above' }, label),
       m('div.mdc-line-ripple'),
     ]);
   }

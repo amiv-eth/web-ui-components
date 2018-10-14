@@ -12,6 +12,11 @@ A component to select an item out of an API resource, e.g. a user.
 ![selected](https://gitlab.ethz.ch/amiv/web-ui-components/raw/master/docs/listselect/selected.png)  
 ![submission](https://gitlab.ethz.ch/amiv/web-ui-components/raw/master/docs/listselect/submission.png)
 
+## Select
+A component to select an item from a given set.
+
+![select](https://gitlab.ethz.ch/amiv/web-ui-components/raw/master/docs/select/select.png)
+
 ## Input Fields
 Input fields are all set up to display errors. These errors are e.g. set by the `Form` class that validates a full form against a jsonschema.
 
