@@ -2,6 +2,7 @@ import m from 'mithril';
 import Ajv from 'ajv';
 import { Checkbox } from 'polythene-mithril';
 import { TextInput, DatetimeInput, NumInput } from './inputFields';
+import Select from './select';
 
 export default class Form {
   /**
@@ -56,6 +57,7 @@ export default class Form {
         }
       }
     });
+    this.schema = objectSchema;
     this.ajv.addSchema(objectSchema, 'schema');
   }
 
@@ -113,7 +115,7 @@ export default class Form {
   }
 
   /**
-   * Rendering Function to make form descriptions shorter
+   * Rendering function to make form descriptions shorter
    *
    * @param  {object} Collection of descriptions for input form fields
    *                  {key: description}
@@ -126,29 +128,19 @@ export default class Form {
   renderPage(page) {
     return Object.keys(page).map((key) => {
       const field = page[key];
-      if (field.type === 'text') {
-        field.name = key;
-        field.floatingLabel = true;
-        delete field.type;
-        return m(TextInput, this.bind(field));
-      } else if (field.type === 'number') {
-        field.name = key;
-        field.floatingLabel = true;
-        delete field.type;
-        return m(NumInput, this.bind(field));
-      } else if (field.type === 'checkbox') {
-        field.checked = this.data[key] || false;
-        field.onChange = ({ checked }) => {
-          this.data[key] = checked;
-        };
-        delete field.type;
-        return m(Checkbox, field);
-      } else if (field.type === 'datetime') {
-        field.name = key;
-        delete field.type;
-        return m(DatetimeInput, this.bind(field));
-      }
-      return `key '${key}' not found`;
+      return this._renderField(key, field);
+    });
+  }
+
+  /**
+   * Rendering function to render the whole schema.
+   *
+   * @return {string} mithril rendered output
+   */
+  renderSchema() {
+    return Object.keys(this.schema.properties).map((key) => {
+      const property = this.schema.properties[key];
+      return this._renderField(key, property);
     });
   }
 
@@ -157,5 +149,41 @@ export default class Form {
    */
   getData() {
     return this.data;
+  }
+
+  /**
+   * Renders a single field.
+   */
+  _renderField(key, field) {
+    const attrs = field;
+    if (field.type === 'text' || field.type === 'string') {
+      attrs.floatingLabel = true;
+      delete attrs.type;
+      return m(TextInput, this.bind(attrs));
+    } else if (field.type === 'number' || field.type === 'integer') {
+      attrs.name = key;
+      attrs.label = field.label || field.description;
+      attrs.floatingLabel = true;
+      delete attrs.type;
+      return m(NumInput, this.bind(attrs));
+    } else if (field.type === 'checkbox') {
+      attrs.checked = this.data[key] || false;
+      attrs.label = field.label || field.description;
+      attrs.onChange = ({ checked }) => {
+        this.data[key] = checked;
+      };
+      delete attrs.type;
+      return m(Checkbox, attrs);
+    } else if (field.type === 'datetime') {
+      attrs.name = key;
+      attrs.label = field.label || field.description;
+      delete attrs.type;
+      return m(DatetimeInput, this.bind(attrs));
+    } else if (field.enum) {
+      attrs.name = key;
+      attrs.label = field.label || field.description;
+      return m(Select, this.bind(attrs));
+    }
+    return `key '${key}' not found`;
   }
 }
