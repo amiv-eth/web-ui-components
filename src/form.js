@@ -44,17 +44,17 @@ export default class Form {
       }
       if (objectSchema.properties[property].format === 'objectid') {
         delete objectSchema.properties[property];
-      }
-      // translate nullable field from OpenAPI specification to
-      // possible type null in jsonschema
-      if (objectSchema.properties[property].nullable) {
-        objectSchema.properties[property].type = [
-          'null',
-          objectSchema.properties[property].type,
-        ];
-        if ('enum' in objectSchema.properties[property]) {
-          objectSchema.properties[property].enum.push(null);
-        }
+      } else {
+        // translate nullable field from OpenAPI specification to
+        // possible type null in jsonschema
+        if (objectSchema.properties[property].nullable) {
+          objectSchema.properties[property].type = [
+            'null',
+            objectSchema.properties[property].type,
+          ];
+          if ('enum' in objectSchema.properties[property]) {
+            objectSchema.properties[property].enum.push(null);
+          }
       }
     });
     this.ajv.addSchema(objectSchema, 'schema');
