@@ -44,10 +44,9 @@ export default class Form {
       }
       if (objectSchema.properties[property].format === 'objectid') {
         delete objectSchema.properties[property];
-      }
-      // translate nullable field from OpenAPI specification to
-      // possible type null in jsonschema
-      if (objectSchema.properties[property].nullable) {
+      } else if (objectSchema.properties[property].nullable) {
+        // translate nullable field from OpenAPI specification to
+        // possible type null in jsonschema
         objectSchema.properties[property].type = [
           'null',
           objectSchema.properties[property].type,
