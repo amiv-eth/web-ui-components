@@ -1,7 +1,7 @@
 import m from 'mithril';
 import Ajv from 'ajv';
 import { Checkbox } from 'polythene-mithril';
-import { textInput, datetimeInput, numInput } from './inputFields';
+import { TextInput, DatetimeInput, NumInput } from './inputFields';
 
 export default class Form {
   /**
@@ -130,12 +130,12 @@ export default class Form {
         field.name = key;
         field.floatingLabel = true;
         delete field.type;
-        return m(textInput, this.bind(field));
+        return m(TextInput, this.bind(field));
       } else if (field.type === 'number') {
         field.name = key;
         field.floatingLabel = true;
         delete field.type;
-        return m(numInput, this.bind(field));
+        return m(NumInput, this.bind(field));
       } else if (field.type === 'checkbox') {
         field.checked = this.data[key] || false;
         field.onChange = ({ checked }) => {
@@ -146,7 +146,7 @@ export default class Form {
       } else if (field.type === 'datetime') {
         field.name = key;
         delete field.type;
-        return m(datetimeInput, this.bind(field));
+        return m(DatetimeInput, this.bind(field));
       }
       return `key '${key}' not found`;
     });
