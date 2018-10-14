@@ -1,7 +1,7 @@
 import m from 'mithril';
 import Ajv from 'ajv';
 import { Checkbox } from 'polythene-mithril';
-import { TextInput, DatetimeInput, NumInput } from './inputFields';
+import { textInput, datetimeInput, numInput } from './inputFields';
 
 export default class Form {
   /**
@@ -36,7 +36,6 @@ export default class Form {
   setSchema(schema) {
     // clean the schema of any keys that ajv does not like
     const objectSchema = Object.assign({}, schema);
-    // console.log(objectSchema);
     // filter out any field that is not understood by the validator tool
     Object.keys(objectSchema.properties).forEach((property) => {
       if (objectSchema.properties[property].type === 'media' ||
@@ -53,6 +52,9 @@ export default class Form {
           'null',
           objectSchema.properties[property].type,
         ];
+        if ('enum' in objectSchema.properties[property]) {
+          objectSchema.properties[property].enum.push(null);
+        }
       }
     });
     this.ajv.addSchema(objectSchema, 'schema');
@@ -76,9 +78,6 @@ export default class Form {
         this.changed = true;
         // bind changed data
         this.data[name] = value;
-
-        console.log(this.data);
-
         this.validate();
       },
       getErrors: () => this.errors[attrs.name],
@@ -106,6 +105,7 @@ export default class Form {
         Object.keys(this.errors).forEach((field) => {
           const errors = validate.errors.filter(error =>
             `.${field}` === error.dataPath);
+
           this.errors[field] = errors.map(error => error.message);
         });
       }
@@ -131,12 +131,12 @@ export default class Form {
         field.name = key;
         field.floatingLabel = true;
         delete field.type;
-        return m(TextInput, this.bind(field));
+        return m(textInput, this.bind(field));
       } else if (field.type === 'number') {
         field.name = key;
         field.floatingLabel = true;
         delete field.type;
-        return m(NumInput, this.bind(field));
+        return m(numInput, this.bind(field));
       } else if (field.type === 'checkbox') {
         field.checked = this.data[key] || false;
         field.onChange = ({ checked }) => {
@@ -147,7 +147,7 @@ export default class Form {
       } else if (field.type === 'datetime') {
         field.name = key;
         delete field.type;
-        return m(DatetimeInput, this.bind(field));
+        return m(datetimeInput, this.bind(field));
       }
       return `key '${key}' not found`;
     });
