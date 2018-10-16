@@ -2,6 +2,7 @@ import m from 'mithril';
 import Ajv from 'ajv';
 import { Checkbox } from 'polythene-mithril';
 import { TextInput, DatetimeInput, NumInput } from './inputFields';
+import { RadioGroup } from './radioGroup';
 import Select from './select';
 
 export default class Form {
@@ -11,12 +12,17 @@ export default class Form {
    * - vnode.attrs.onfinish has to be a callback function that is called after
    *   the edit is finished
    *
-   * @param {object}  vnode        as provided by mithril
-   * @param {boolean} valid        whether the view should be valid before the first validation
-   * @param {object}  initialData  initial data for the form
+   * @param {object}  _vnode              as provided by mithril
+   * @param {boolean} valid               whether the view should be valid before the first
+   *                                      validation
+   * @param {number}  enumSelectThreshold enums with more values are rendered with a Select input.
+   *                                      Enum fields with number of values below the threshold are
+   *                                      rendered using RadioGroups.
+   * @param {object}  initialData         initial data for the form
    */
-  constructor(vnode, valid = true, initialData = {}) {
+  constructor(_vnode, valid = true, enumSelectThreshold = 4, initialData = {}) {
     this.data = initialData;
+    this.enumSelectThreshold = enumSelectThreshold;
     this.changed = false;
     // state for validation
     this.valid = valid;
@@ -115,31 +121,42 @@ export default class Form {
   }
 
   /**
-   * Rendering function to make form descriptions shorter
-   *
-   * @param  {object} Collection of descriptions for input form fields
-   *                  {key: description}
-   *                  with key matching the field in this.data
-   *                  description containing type in ['text', 'number',
-   *                  'checkbox', 'datetime'] and any attributes passed to the
-   *                  input element
-   * @return {string} mithril rendered output
-   */
-  renderPage(page) {
-    return Object.keys(page).map((key) => {
-      const field = page[key];
-      return this._renderField(key, field);
-    });
-  }
-
-  /**
    * Rendering function to render the whole schema.
    *
-   * @return {string} mithril rendered output
+   * @param  {object|array|null} fields to be rendered.
+   *                             - Object containing a valid JSON schema.
+   *                               Additional properties (not defined by JSON schema)
+   *                               are handed directly to the input field component.
+   *                             - Array containing a list of field names to be rendered
+   *                               from the existing JSON schema.
+   *                             - Null means that the full existing JSON schema is rendered.
+   * @return {string}            mithril rendered output
    */
-  renderSchema() {
-    return Object.keys(this.schema.properties).map((key) => {
-      const property = this.schema.properties[key];
+  renderSchema(fields = null) {
+    if (Array.isArray(fields)) {
+      // render specified fields from JSON schema.
+      return fields.map((key) => {
+        const property = this.schema.properties[key];
+        return this._renderField(key, property);
+      });
+    }
+
+    if (fields === null) {
+      // render full JSON schema.
+      return Object.keys(this.schema.properties).map((key) => {
+        const property = this.schema.properties[key];
+        return this._renderField(key, property);
+      });
+    }
+
+    if (!fields.properties) {
+      // invalid JSON schema
+      return m('');
+    }
+
+    // render given JSON schema.
+    return Object.keys(fields.properties).map((key) => {
+      const property = fields.properties[key];
       return this._renderField(key, property);
     });
   }
@@ -156,33 +173,51 @@ export default class Form {
    */
   _renderField(key, field) {
     const attrs = field;
-    if (field.type === 'text' || field.type === 'string') {
+
+    if (field.enum) {
+      attrs.name = key;
+      attrs.label = field.label || field.title;
+
+      if (field.enum.length < this.enumSelectThreshold) {
+        // below threshold -> render as RadioGroup
+        attrs.buttons = field.enum.map(item => ({
+          value: item,
+          label: item,
+        }));
+        delete attrs.enum;
+        return m(RadioGroup, this.bind(attrs));
+      }
+
+      // above threshold -> render as Select field
+      attrs.options = field.enum;
+      delete attrs.enum;
+      return m(Select, this.bind(attrs));
+    } else if (field.type === 'string') {
+      if (field.format === 'date-time') {
+        attrs.name = key;
+        attrs.label = field.label || field.title;
+        delete attrs.type;
+        delete attrs.format;
+        return m(DatetimeInput, this.bind(attrs));
+      }
+
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(TextInput, this.bind(attrs));
-    } else if (field.type === 'number' || field.type === 'integer') {
+    } else if (field.type === 'number') {
       attrs.name = key;
-      attrs.label = field.label || field.description;
+      attrs.label = field.label || field.title;
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(NumInput, this.bind(attrs));
-    } else if (field.type === 'checkbox') {
+    } else if (field.type === 'boolean') {
       attrs.checked = this.data[key] || false;
-      attrs.label = field.label || field.description;
+      attrs.label = field.label || field.title;
       attrs.onChange = ({ checked }) => {
         this.data[key] = checked;
       };
       delete attrs.type;
       return m(Checkbox, attrs);
-    } else if (field.type === 'datetime') {
-      attrs.name = key;
-      attrs.label = field.label || field.description;
-      delete attrs.type;
-      return m(DatetimeInput, this.bind(attrs));
-    } else if (field.enum) {
-      attrs.name = key;
-      attrs.label = field.label || field.description;
-      return m(Select, this.bind(attrs));
     }
     return `key '${key}' not found`;
   }
