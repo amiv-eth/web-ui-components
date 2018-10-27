@@ -176,7 +176,7 @@ export default class Form {
 
     if (field.enum) {
       attrs.name = key;
-      attrs.label = field.label || field.title || field.key;
+      attrs.label = field.label || field.title || key;
 
       if (field.enum.length < this.enumSelectThreshold) {
         // below threshold -> render as RadioGroup
