@@ -172,11 +172,11 @@ export default class Form {
    * Renders a single field.
    */
   _renderField(key, field) {
-    const attrs = field;
+    const attrs = JSON.parse(JSON.stringify(field));
 
     if (field.enum) {
       attrs.name = key;
-      attrs.label = field.label || field.title;
+      attrs.label = field.label || field.title || field.key;
 
       if (field.enum.length < this.enumSelectThreshold) {
         // below threshold -> render as RadioGroup
@@ -185,12 +185,14 @@ export default class Form {
           label: item,
         }));
         delete attrs.enum;
+        delete attrs.type;
         return m(RadioGroup, this.bind(attrs));
       }
 
       // above threshold -> render as Select field
       attrs.options = field.enum;
       delete attrs.enum;
+      delete attrs.type;
       return m(Select, this.bind(attrs));
     } else if (field.type === 'string') {
       if (field.format === 'date-time') {
