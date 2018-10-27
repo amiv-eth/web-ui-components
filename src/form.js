@@ -173,11 +173,10 @@ export default class Form {
    */
   _renderField(key, field) {
     const attrs = JSON.parse(JSON.stringify(field));
+    attrs.name = key;
+    attrs.label = field.label || field.title || key;
 
     if (field.enum) {
-      attrs.name = key;
-      attrs.label = field.label || field.title || key;
-
       if (field.enum.length < this.enumSelectThreshold) {
         // below threshold -> render as RadioGroup
         attrs.buttons = field.enum.map(item => ({
@@ -196,8 +195,6 @@ export default class Form {
       return m(Select, this.bind(attrs));
     } else if (field.type === 'string') {
       if (field.format === 'date-time') {
-        attrs.name = key;
-        attrs.label = field.label || field.title;
         delete attrs.type;
         delete attrs.format;
         return m(DatetimeInput, this.bind(attrs));
@@ -207,14 +204,11 @@ export default class Form {
       delete attrs.type;
       return m(TextInput, this.bind(attrs));
     } else if (field.type === 'number') {
-      attrs.name = key;
-      attrs.label = field.label || field.title;
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(NumInput, this.bind(attrs));
     } else if (field.type === 'boolean') {
       attrs.checked = this.data[key] || false;
-      attrs.label = field.label || field.title;
       attrs.onChange = ({ checked }) => {
         this.data[key] = checked;
       };
