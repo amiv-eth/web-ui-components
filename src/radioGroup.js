@@ -9,7 +9,7 @@ import { RadioButton } from 'polythene-mithril';
  *   - `value` current checked value
  *   - `default` default checked value
  *   - `values` array of possible values like [{label: '', value: ''}]
- *   - `onchange` called whenever value changes with value as argument
+ *   - `onChange` called whenever value changes with value as argument
  *
  * @return {RadioGroupComponent} generic checkbox as mithril component.
  */
@@ -34,7 +34,7 @@ export default class RadioGroup {
         onChange: (state) => {
           if (state.checked) {
             this.value = option.value;
-            vnode.attrs.onchange(this.value);
+            vnode.attrs.onChange(this.value);
           }
         },
       }));
