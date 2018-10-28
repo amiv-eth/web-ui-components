@@ -13,7 +13,7 @@ export class TextInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value) -
+   * @param {function} attrs.onChange     function (name, value, invalid) -
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -28,7 +28,7 @@ export class TextInput {
   }
 
   view({ attrs }) {
-    // set display-settings accoridng to error-state
+    // set display-settings according to error-state
     const errors = this.getErrors();
 
     const attributes = Object.assign({}, attrs);
@@ -38,10 +38,10 @@ export class TextInput {
       'margin-top': '-10px',
       'margin-bottom': '-10px',
     }, attributes.style);
-    attributes.onChange = ({ value }) => {
+    attributes.onChange = ({ value, invalid }) => {
       if (value !== this.value) {
         this.value = value;
-        attrs.onChange(this.name, value);
+        attrs.onChange(this.name, value, invalid);
       }
     };
     return m(TextField, attributes);
@@ -59,12 +59,12 @@ export class NumInput extends TextInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value) -
+   * @param {function} attrs.onChange     function (name, value, invalid) -
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
   view({ attrs }) {
-    // set display-settings accoridng to error-state
+    // set display-settings according to error-state
     const errors = this.getErrors();
 
     const attributes = Object.assign({}, attrs);
@@ -75,10 +75,10 @@ export class NumInput extends TextInput {
       'margin-top': '-10px',
       'margin-bottom': '-10px',
     }, attributes.style);
-    attributes.onChange = ({ value }) => {
+    attributes.onChange = ({ value, invalid }) => {
       if (value !== this.value) {
         this.value = value;
-        attrs.onChange(this.name, parseInt(value, 10));
+        attrs.onChange(this.name, parseInt(value, 10), invalid);
       }
     };
     return m(TextField, attributes);
@@ -97,7 +97,7 @@ export class DatetimeInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value) -
+   * @param {function} attrs.onChange     function (name, value, invalid) -
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -119,15 +119,18 @@ export class DatetimeInput {
       date.setHours(splitted[0]);
       date.setMinutes(splitted[1]);
       if (this.onChangeCallback) {
-        // the ISO String contains 3 positions for microseconds, this kind of fomrat
+        // the ISO String contains 3 positions for microseconds, this kind of format
         // is not accepted by the API
-        this.onChangeCallback(this.name, `${date.toISOString().slice(0, -5)}Z`);
+        this.onChangeCallback(
+          this.name, `${date.toISOString().slice(0, -5)}Z`,
+          this.getErrors().length > 0,
+        );
       }
     }
   }
 
   view({ attrs: { label, value } }) {
-    // set display-settings accoridng to error-state
+    // set display-settings according to error-state
     const errors = this.getErrors();
     let initialDate;
     let initialTime;
@@ -206,7 +209,7 @@ export class FileInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value) -
+   * @param {function} attrs.onChange     function (name, value, invalid) -
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -220,7 +223,7 @@ export class FileInput {
   }
 
   view({ attrs: { label, accept } }) {
-    // set display-settings accoridng to error-state
+    // set display-settings according to error-state
     const errors = this.getErrors();
 
     const image = {
@@ -231,7 +234,7 @@ export class FileInput {
           // as we only accept one file, it is always the first element
           // of the list
           this.file = file;
-          this.onChangeCallback(this.name, this.file);
+          this.onChangeCallback(this.name, this.file, this.getErrors().length > 0);
         }
       },
     };
