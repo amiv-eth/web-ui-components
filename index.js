@@ -7,3 +7,5 @@ export { default as ListSelect } from './src/listSelect';
 export { default as RadioGroup } from './src/radioGroup';
 export { default as Spinner } from './src/spinner';
 export { default as Chip } from './src/chip';
+export { default as Collapse } from './src/collapse';
+export { default as ExpansionPanel } from './src/expansionPanel';
