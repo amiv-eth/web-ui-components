@@ -49,7 +49,7 @@ export default class Select {
             {
               style: borderBottomColor,
               onchange: ({ target: { value } }) => {
-                onChange(name, value);
+                onChange({ value });
               },
               ...kwargs,
             },

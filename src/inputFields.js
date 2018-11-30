@@ -13,8 +13,10 @@ export class TextInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value, invalid) -
-   *   this function is called every time that the value of the input changes
+   * @param {function} attrs.onChange     function ({ value, invalid }) -
+   *   All parameters from the underlying polythene component are passed with the first
+   *   parameter as one object.
+   *   This function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
   constructor({ attrs: { getErrors, name } }) {
@@ -38,10 +40,10 @@ export class TextInput {
       'margin-top': '-10px',
       'margin-bottom': '-10px',
     }, attributes.style);
-    attributes.onChange = ({ value, invalid }) => {
+    attributes.onChange = ({ value, ...params }) => {
       if (value !== this.value) {
         this.value = value;
-        attrs.onChange(this.name, value, invalid);
+        attrs.onChange({ value, ...params });
       }
     };
     return m(TextField, attributes);

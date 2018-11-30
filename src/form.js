@@ -81,10 +81,10 @@ export default class Form {
     if (!this.errors[attrs.name]) this.errors[attrs.name] = [];
 
     const boundFormelement = {
-      onChange: (name, value) => {
+      onChange: ({ value }) => {
         this.changed = true;
         // bind changed data
-        this.data[name] = value;
+        this.data[attrs.name] = value;
         this.validate();
       },
       getErrors: () => this.errors[attrs.name],
