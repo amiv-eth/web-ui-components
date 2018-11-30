@@ -1,19 +1,18 @@
 import m from 'mithril';
 import { RadioButton } from 'polythene-mithril';
 
-/**
- * Generic RadioGroup component
- *
- * Attributes:
- *
- *   - `value` current checked value
- *   - `default` default checked value
- *   - `values` array of possible values like [{label: '', value: ''}]
- *   - `onChange` called whenever value changes with value as argument
- *
- * @return {RadioGroupComponent} generic checkbox as mithril component.
- */
 export default class RadioGroup {
+  /**
+   * Generic RadioGroup component
+   *
+   * @param {string}   attrs.value    Current checked value
+   * @param {string}   attrs.default  Default checked value
+   * @param {array}    attrs.values   Array of possible values.
+   *   Example: [{label: 'l1', value: 'v1'}, {label: 'l2', value: 'v2'}]
+   * @param {function} attrs.onChange Called whenever the value changes
+   *   Example: function callback(value) { ... }
+   */
+
   constructor(vnode) {
     this.value = vnode.attrs.value || vnode.attrs.default;
   }

@@ -71,26 +71,21 @@ class SearchField {
 }
 
 export default class ListSelect {
-  /*
+  /**
    * A selection field where the value can be choosen from a large list of items
    * loaded from an API resource (e.g. select a user or an event).
    *
-   * Attrs:
-   *   controller: a `datalistcontroller`
-   *     used as a controller for the list state
-   *   selectedText: function(item)
-   *     function that maps the selected API object to a string that can be displayed as the
+   * @param {object}   controller    a `datalistcontroller` used as a controller for the list state
+   * @param {function} selectedText  function(item)
+   *     Function that maps the selected API object to a string that can be displayed as the
    *     selected item. e.g. `${item.firstname} ${item.lastname}` in case of a user.
-   *   listTileAttrs: funtion(item)
-   *     function that maps an API object to attributes of a polythene 'ListTile' to display the
+   * @param {function} listTileAttrs funtion(item)
+   *     Function that maps an API object to attributes of a polythene 'ListTile' to display the
    *     possibilities out of which the user can select one.
-   *   onSelect: function
-   *     callback when an item is selected
-   *   onSubmit: function
-   *     callback when an item is submitted
-   *     Submittion is only possible if this function is set.
-   *   onCancel: function
-   *     callback when the selection is cancelled
+   * @param {function} onSelect      Callback when an item is selected
+   * @param {function} onSubmit      Callback when an item is submitted
+   *     Submission is only possible if this function is set.
+   * @param {function} onCancel      Callback when the selection is cancelled
    *     Cancellation is only possible if this function is set.
    */
 
