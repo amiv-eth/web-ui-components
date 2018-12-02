@@ -5,8 +5,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**",
-    "lint-fix": "eslint --fix src/**"
+    "lint": "eslint src/*.js src/**/*.js",
+    "lint-fix": "eslint --fix src/*.js src/**/*.js"
   },
   "repository": {
     "type": "git",
