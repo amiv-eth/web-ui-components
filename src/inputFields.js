@@ -61,7 +61,9 @@ export class NumInput extends TextInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value, invalid) -
+   * @param {function} attrs.onChange     function ({ value, invalid }) -
+   *   All parameters from the underlying polythene component are passed with the first
+   *   parameter as one object.
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -77,10 +79,10 @@ export class NumInput extends TextInput {
       'margin-top': '-10px',
       'margin-bottom': '-10px',
     }, attributes.style);
-    attributes.onChange = ({ value, invalid }) => {
+    attributes.onChange = ({ value, ...params }) => {
       if (value !== this.value) {
         this.value = value;
-        attrs.onChange(this.name, parseInt(value, 10), invalid);
+        attrs.onChange({ value: parseInt(value, 10), ...params });
       }
     };
     return m(TextField, attributes);
@@ -100,6 +102,8 @@ export class DatetimeInput {
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
    * @param {function} attrs.onChange     function (name, value, invalid) -
+   *   All parameters from the underlying polythene component are passed with the first
+   *   parameter as one object.
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -123,10 +127,10 @@ export class DatetimeInput {
       if (this.onChangeCallback) {
         // the ISO String contains 3 positions for microseconds, this kind of format
         // is not accepted by the API
-        this.onChangeCallback(
-          this.name, `${date.toISOString().slice(0, -5)}Z`,
-          this.getErrors().length > 0,
-        );
+        this.onChangeCallback({
+          value: `${date.toISOString().slice(0, -5)}Z`,
+          invalid: this.getErrors().length > 0,
+        });
       }
     }
   }
@@ -211,7 +215,9 @@ export class FileInput {
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
-   * @param {function} attrs.onChange     function (name, value, invalid) -
+   * @param {function} attrs.onChange     function ({ value, invalid }) -
+   *   All parameters from the underlying polythene component are passed with the first
+   *   parameter as one object.
    *   this function is called every time that the value of the input changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    */
@@ -236,7 +242,10 @@ export class FileInput {
           // as we only accept one file, it is always the first element
           // of the list
           this.file = file;
-          this.onChangeCallback(this.name, this.file, this.getErrors().length > 0);
+          this.onChangeCallback({
+            value: this.file,
+            invalid: this.getErrors().length > 0,
+          });
         }
       },
     };
