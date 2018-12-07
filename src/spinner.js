@@ -6,8 +6,6 @@ import './animations.css';
 const styles = {
   root: {
     opacity: '0',
-    width: '48px',
-    height: '48px',
   },
   visible: {
     opacity: '1',
@@ -36,17 +34,28 @@ export default class Spinner {
    *
    * @param {boolean} attrs.show Specifies if the spinner is visible or not.
    *   Spinner is not visible by default (i.e. { show: false })
+   * @param {string}  attrs.size Set a CSS size value (default: 48px)
+   *   This value is applied as width and height to the spinner.
    *
    * Example:
    *   ```javascript
-   *   m(Spinner, { show: true })
+   *   m(Spinner, { show: true, size: '96px' })
    *   ```
    */
 
-  static view({ attrs: { style = {}, show = false, ...attrs } }) {
+  static view({ attrs: { style, size = '48px', show = false, ...attrs } }) {
     return m(
       'div',
-      { style: { ...styles.root, ...(show ? styles.visible : {}), ...style }, ...attrs },
+      {
+        style: {
+          ...styles.root,
+          ...(show ? styles.visible : {}),
+          width: size,
+          height: size,
+          ...style,
+        },
+        ...attrs,
+      },
       [
         m(Icon, { svg: m.trust(icons.amivDiode), style: styles.icons }),
         m(Icon, {
