@@ -74,7 +74,7 @@ export default class ExpansionPanel {
     attrs: {
       expanded,
       separated = false,
-      separatedMargin = '32px',
+      separatedMargin = '16px',
       duration = 300,
       animation = 'cubic-bezier(0.4, 0, 0.2, 1)',
       onChange = () => {},
@@ -84,7 +84,9 @@ export default class ExpansionPanel {
       ...attrs
     },
   }) {
-    this.expanded = expanded || this.expanded;
+    if (expanded || expanded === false) {
+      this.expanded = expanded;
+    }
 
     const attributes = {
       expanded: this.expanded,
