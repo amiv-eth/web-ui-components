@@ -19,10 +19,15 @@ export default class Select {
    *   * as a list of objects (set label and value independently)
    *     Example: `[{ label: 'label1', value: 'value1' }, { label: 'label2', value: 'value2' }]`
    * @param {string}   attrs.value    Selected value
+   * @param {boolean}  attrs.disabled Disable/enable the select field
    */
 
   oncreate({ dom }) {
     this.mdcSelect = new MDCSelect(dom.querySelector(`#${this.name}`));
+  }
+
+  onupdate({ attrs: { disabled = false } }) {
+    this.foo.disabled = disabled;
   }
 
   view({
