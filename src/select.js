@@ -4,7 +4,7 @@ import '@material/select/dist/mdc.select.css';
 
 export default class Select {
   /**
-   * A selection field where the value can be choosen from a small given set.
+   * A selection field where the value can be chosen from a small given set.
    *
    * @param {object}   attrs          unless specified below, attrs will be
    *   passed into the <select/> input field.
@@ -14,6 +14,10 @@ export default class Select {
    *   this function is called every time that the value of the select changes
    *   (i.e. not the focus, as would happen with polythene inputs)
    * @param {array}    attrs.options  Array containing the selectable items
+   *   * as a list of strings (value and label will be the same)
+   *     Example: `['item1', 'item2']`
+   *   * as a list of objects (set label and value independently)
+   *     Example: `[{ label: 'label1', value: 'value1' }, { label: 'label2', value: 'value2' }]`
    * @param {string}   attrs.value    Selected value
    */
 
@@ -58,7 +62,12 @@ export default class Select {
             },
             [
               m.trust('<option value="" disabled selected></option>'),
-              ...options.map((option) => m('option', { value: option }, option)),
+              ...options.map((option) => {
+                if (typeof option === 'object' && option !== null) {
+                  return m('option', { value: option.value }, option.label);
+                }
+                return m('option', { value: option }, option);
+              }),
             ],
           ),
           m(
