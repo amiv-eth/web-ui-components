@@ -43,11 +43,12 @@ export default class Select {
         'div.mdc-select',
         {
           id: name,
-          'aria-controls': `${name}-helper-text`,
-          'aria-describedby': `${name}-helper-text`,
           style: {
+            width: '100%',
             backgroundColor: 'transparent',
           },
+          'aria-controls': `${name}-helper-text`,
+          'aria-describedby': `${name}-helper-text`,
         },
         [
           m('i.mdc-select__dropdown-icon'),
@@ -87,7 +88,12 @@ export default class Select {
         'p.pe-textfield-error',
         {
           id: `${name}-helper-text`,
-          style: { color: 'rgba(221, 44, 0, 1)', 'font-size': '12px', margin: '6px 0 0' },
+          style: {
+            color: 'rgba(221, 44, 0, 1)',
+            width: '100%',
+            'font-size': '12px',
+            margin: '6px 0 0',
+          },
         },
         getErrors(),
       ),
