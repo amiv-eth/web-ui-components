@@ -2,7 +2,7 @@ import m from 'mithril';
 import Ajv from 'ajv';
 import { Checkbox } from 'polythene-mithril';
 import { TextInput, DatetimeInput, NumInput } from './inputFields';
-import { RadioGroup } from './radioGroup';
+import RadioGroup from './radioGroup';
 import Select from './select';
 
 export default class Form {
