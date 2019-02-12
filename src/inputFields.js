@@ -40,6 +40,8 @@ export class TextInput {
       'margin-top': '-10px',
       'margin-bottom': '-10px',
     }, attributes.style);
+    // if value is null, display empty string
+    attributes.value = attrs.value || '';
     attributes.onChange = ({ value, ...params }) => {
       if (value !== this.value) {
         this.value = value;
