@@ -176,10 +176,17 @@ export default class Form {
     attrs.name = key;
     attrs.label = field.label || field.title || key;
 
+    // Nullable fields are explicitly set to type: ['null', actual type]
+    let { type } = field;
+    if (Array.isArray(field.type)) {
+      if (field.type[0] === 'null') [, type] = field.type; // takes second element of array
+      else [type] = field.type; // takes first element of array
+    }
+
     if (field.enum) {
       if (field.enum.length < this.enumSelectThreshold) {
         // below threshold -> render as RadioGroup
-        attrs.buttons = field.enum.map(item => ({
+        attrs.values = field.enum.map(item => ({
           value: item,
           label: item,
         }));
@@ -187,27 +194,25 @@ export default class Form {
         delete attrs.type;
         return m(RadioGroup, this.bind(attrs));
       }
-
       // above threshold -> render as Select field
       attrs.options = field.enum;
       delete attrs.enum;
       delete attrs.type;
       return m(Select, this.bind(attrs));
-    } else if (field.type === 'string') {
+    } else if (type === 'string') {
       if (field.format === 'date-time') {
         delete attrs.type;
         delete attrs.format;
         return m(DatetimeInput, this.bind(attrs));
       }
-
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(TextInput, this.bind(attrs));
-    } else if (field.type === 'number') {
+    } else if (type === 'number') {
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(NumInput, this.bind(attrs));
-    } else if (field.type === 'boolean') {
+    } else if (type === 'boolean') {
       attrs.checked = this.data[key] || false;
       attrs.onChange = ({ checked }) => {
         this.data[key] = checked;
