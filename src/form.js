@@ -208,7 +208,7 @@ export default class Form {
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(TextInput, this.bind(attrs));
-    } else if (type === 'number') {
+    } else if (type === 'number' || type === 'integer') {
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(NumInput, this.bind(attrs));
@@ -220,6 +220,6 @@ export default class Form {
       delete attrs.type;
       return m(Checkbox, attrs);
     }
-    return `key '${key}' not found`;
+    return `field type '${type}' of key '${key}' not supported`;
   }
 }
