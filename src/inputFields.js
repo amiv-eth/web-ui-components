@@ -146,11 +146,11 @@ export class DatetimeInput {
       const parsed = new Date(value);
       // convert to locale timezone
       const locale = {
-        year: parsed.getFullYear(),
-        month: `${parsed.getMonth() + 1}`.padStart(2, '0'),
-        date: `${parsed.getDate()}`.padStart(2, '0'),
-        hour: `${parsed.getHours()}`.padStart(2, '0'),
-        minute: `${parsed.getMinutes()}`.padStart(2, '0'),
+        year: parsed.getUTCFullYear(),
+        month: `${parsed.getUTCMonth() + 1}`.padStart(2, '0'),
+        date: `${parsed.getUTCDate()}`.padStart(2, '0'),
+        hour: `${parsed.getUTCHours()}`.padStart(2, '0'),
+        minute: `${parsed.getUTCMinutes()}`.padStart(2, '0'),
       };
       initialDate = `${locale.year}-${locale.month}-${locale.date}`;
       initialTime = `${locale.hour}:${locale.minute}`;
