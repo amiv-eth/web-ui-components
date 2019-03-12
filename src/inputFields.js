@@ -100,6 +100,7 @@ export class DatetimeInput {
    *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
    * @param {string}   attrs.name         key assigned to this input
    * @param {string}   attrs.label        label shown with this input field, has to fit into 200px
+   * @param {string}   attrs.help         helper text for the input
    * @param {function} attrs.getErrors    This function is called at every mithril
    *   view() to get the errors for this input field. This allows updates of all form
    *   field errors with a simple `m.redraw()`.
@@ -137,7 +138,7 @@ export class DatetimeInput {
     }
   }
 
-  view({ attrs: { label, value } }) {
+  view({ attrs: { label, value, help } }) {
     // set display-settings according to error-state
     const errors = this.getErrors();
     let initialDate;
@@ -169,7 +170,6 @@ export class DatetimeInput {
         }
       },
       valid: errors.length === 0,
-      error: errors.join(', '),
       value: this.date || initialDate,
     };
 
@@ -187,10 +187,13 @@ export class DatetimeInput {
       valid: errors.length === 0,
       value: this.time || initialTime,
     };
-    return m('div', [
+    return m('div', { style: { height: '120px' } }, [
       m(TextField, {
         label,
         disabled: true,
+        valid: errors.length === 0,
+        error: errors.join(', '),
+        help,
         style: {
           width: '200px',
           float: 'left',
@@ -212,6 +215,7 @@ export class FileInput {
    *   [TextField](https://arthurclemens.github.io/polythene-demos/mithril/#/textfield)
    * @param {string}   attrs.name         key assigned to this input
    * @param {string}   attrs.label        label shown with this input field, has to fit into 200px
+   * @param {string}   attrs.help         helper text for the input
    * @param            attrs.accept       accept attribute of the html file input tag, you can
    *   specify fieltypes here.
    * @param {function} attrs.getErrors    This function is called at every mithril
@@ -232,7 +236,7 @@ export class FileInput {
     this.file = null;
   }
 
-  view({ attrs: { label, accept } }) {
+  view({ attrs: { label, accept, help } }) {
     // set display-settings according to error-state
     const errors = this.getErrors();
 
@@ -262,6 +266,7 @@ export class FileInput {
         },
         valid: errors.length === 0,
         error: errors.join(', '),
+        help,
       }),
       m('input', image),
     ]);

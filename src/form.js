@@ -175,6 +175,7 @@ export default class Form {
     const attrs = JSON.parse(JSON.stringify(field));
     attrs.name = key;
     attrs.label = field.label || field.title || key;
+    attrs.help = field.description ? field.description : undefined;
 
     // Nullable fields are explicitly set to type: ['null', actual type]
     let { type } = field;
