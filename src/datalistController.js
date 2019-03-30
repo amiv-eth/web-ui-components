@@ -39,6 +39,7 @@ export default class DatalistController {
       item,
       pageData: pageNum => this.getPageData(pageNum),
       pageKey: pageNum => `${pageNum}-${this.stateCounter()}`,
+      maxPages: this.totalPages ? this.totalPages : undefined,
     };
   }
 
