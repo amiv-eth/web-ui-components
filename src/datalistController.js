@@ -16,6 +16,7 @@ export default class DatalistController {
     this.query = query || {};
     this.search = null;
     this.filter = null;
+    this.sort = null;
     // state pointer that is counted up every time the table is refreshed so
     // we can tell infinite scroll that the data-version has changed.
     this.stateCounter = Stream(0);
@@ -56,6 +57,7 @@ export default class DatalistController {
     query.max_results = 10;
     query.page = pageNum;
     query.where = Object.assign({}, this.filter, this.query.where);
+    query.sort = this.sort;
     // remove where again if it is empty
     if (Object.keys(query.where).length === 0) delete query.where;
 
@@ -83,7 +85,7 @@ export default class DatalistController {
         if (totalPages <= 1) {
           resolve(firstPage);
         } else {
-        // now fetch all the missing pages
+          // now fetch all the missing pages
           Array.from(new Array(totalPages - 1), (x, i) => i + 2).forEach((pageNum) => {
             this.getPageData(pageNum).then((newPage) => {
               pages[pageNum] = newPage;
@@ -120,6 +122,11 @@ export default class DatalistController {
 
   setQuery(query) {
     this.query = Object.assign({}, query);
+    this.refresh();
+  }
+
+  setSort(sort) {
+    this.sort = sort;
     this.refresh();
   }
 }
