@@ -34,7 +34,7 @@ export default class RadioGroup {
         onChange: (state) => {
           if (state.checked) {
             this.value = option.value;
-            vnode.attrs.onChange(this.value);
+            vnode.attrs.onChange({ value: this.value });
           }
         },
       }));
