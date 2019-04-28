@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server --hot --inline",
     "lint": "eslint src/*.js src/**/*.js",
     "lint-fix": "eslint --fix src/*.js src/**/*.js"
   },
@@ -14,20 +15,31 @@
   },
   "author": "Hermann Blum",
   "dependencies": {
+    "@material/select": "^0.35.1",
     "ajv": "^5.5.0",
+    "cjs": "0.0.11",
     "mithril": "^1.1.6",
     "mithril-infinite": "^1.2.4",
     "polythene-core-css": "^1.2.0",
     "polythene-css": "^1.2.0",
     "polythene-mithril": "^1.2.0",
-    "querystring": "^0.2.0",
-    "@material/select": "^0.35.1"
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-import-resolver-webpack": "^0.9.0",
     "eslint-loader": "^2.0.0",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint-plugin-import": "^2.11.0",
+    "file-loader": "^3.0.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
   }
 }
