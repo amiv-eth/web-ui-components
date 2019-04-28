@@ -1,4 +1,5 @@
 export { default as DatalistController } from './src/datalistController';
+export { default as SimpleDatalistController } from './src/simpleDatalistController';
 export { default as DropdownCard } from './src/dropdownCard';
 export { default as Form } from './src/form';
 export { TextInput, NumInput, DatetimeInput, FileInput } from './src/inputFields';
