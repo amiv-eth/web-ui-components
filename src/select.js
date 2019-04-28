@@ -1,7 +1,6 @@
 import m from 'mithril';
 import '@material/select/dist/mdc.select.css';
 import '@material/select/dist/mdc.select';
-import { MDCSelect } from '@material/select';
 
 export default class Select {
   /**
@@ -18,9 +17,10 @@ export default class Select {
    * @param {string}   attrs.value    Selected value
    */
 
-  oncreate({ dom }) {
-    this.foo = new MDCSelect(dom.querySelector(`#${this.name}`));
-  }
+  // Change until we figure out what fails when enabeling the js component
+  // oncreate({ dom }) {
+  //   this.foo = new MDCSelect(dom.querySelector(`#${this.name}`));
+  // }
 
   view({
     attrs: { options, name, label = '', onChange = () => {}, getErrors = () => [], ...kwargs },
