@@ -76,8 +76,8 @@ export default class Select {
               m.trust(`<option value="" disabled selected hidden>${placeholder}</option>`),
               ...options.map((option) => {
                 const isObject = typeof option === 'object' && option !== null;
-                const value = isObject ? option.value : option;
-                const textLabel = isObject ? option.label : option;
+                const value = isObject && option.value !== undefined ? option.value : option;
+                const textLabel = isObject && option.label !== undefined ? option.label : option;
 
                 return m('option', { value }, textLabel);
               }),
