@@ -27,17 +27,20 @@ export default class Select {
     this.mdcSelect = new MDCSelect(dom.querySelector(`#${this.name}`));
   }
 
+  onupdate({ attrs: { value } }) {
+    this.mdcSelect.value = value;
+  }
+
   view({
     attrs: {
-      className,
-      style,
+      containerAttrs = {},
+      selectAttrs = {},
       options,
       name,
       label = '',
       placeholder = '',
       onChange = () => {},
       getErrors = () => [],
-      ...kwargs
     },
   }) {
     this.name = name;
@@ -50,7 +53,7 @@ export default class Select {
       textColor = { color: 'rgba(221, 44, 0, 1)' };
       borderBottomColor = { 'border-bottom-color': 'rgba(221, 44, 0, 1)' };
     }
-    return m('div', { className, style }, [
+    return m('div', containerAttrs, [
       m(
         'div.mdc-select',
         {
@@ -70,7 +73,7 @@ export default class Select {
               onchange: ({ target: { value } }) => {
                 onChange({ value });
               },
-              ...kwargs,
+              ...selectAttrs,
             },
             [
               m.trust(`<option value="" disabled selected hidden>${placeholder}</option>`),
