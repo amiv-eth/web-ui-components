@@ -1,5 +1,6 @@
 import m from 'mithril';
 import Ajv from 'ajv';
+import JsonSchemaDraft04 from 'ajv/lib/refs/json-schema-draft-04.json';
 import { Checkbox } from 'polythene-mithril';
 import { TextInput, DatetimeInput, NumInput } from './inputFields';
 import RadioGroup from './radioGroup';
@@ -27,10 +28,17 @@ export default class Form {
     // state for validation
     this.valid = valid;
     this.ajv = new Ajv({
+      // Ajv gives a warning that the schema property `$id` is ignored.
+      // With draft-06, the property `id` changed to `$id` which seems
+      // to give some trouble with ajv even when using draft-04 only.
+      // Setting this to auto just prevents those warnings.
+      // Validation seems to work fine.
+      schemaId: 'auto',
       missingRefs: 'ignore',
       errorDataPath: 'property',
       allErrors: true,
     });
+    this.ajv.addMetaSchema(JsonSchemaDraft04);
     this.errors = {};
   }
 
@@ -45,8 +53,8 @@ export default class Form {
     const objectSchema = Object.assign({}, schema);
     // filter out any field that is not understood by the validator tool
     Object.keys(objectSchema.properties).forEach((property) => {
-      if (objectSchema.properties[property].type === 'media' ||
-          objectSchema.properties[property].type === 'json_schema_object') {
+      if (objectSchema.properties[property].type === 'media'
+          || objectSchema.properties[property].type === 'json_schema_object') {
         objectSchema.properties[property].type = 'object';
       }
       if (objectSchema.properties[property].format === 'objectid') {
@@ -110,10 +118,9 @@ export default class Form {
       } else {
         // get errors for respective fields
         Object.keys(this.errors).forEach((field) => {
-          const errors = validate.errors.filter(error =>
-            `.${field}` === error.dataPath);
+          const errors = validate.errors.filter((error) => `.${field}` === error.dataPath);
 
-          this.errors[field] = errors.map(error => error.message);
+          this.errors[field] = errors.map((error) => error.message);
         });
       }
     }
@@ -187,7 +194,7 @@ export default class Form {
     if (field.enum) {
       if (field.enum.length < this.enumSelectThreshold) {
         // below threshold -> render as RadioGroup
-        attrs.values = field.enum.map(item => ({
+        attrs.values = field.enum.map((item) => ({
           value: item,
           label: item,
         }));
@@ -200,7 +207,7 @@ export default class Form {
       delete attrs.enum;
       delete attrs.type;
       return m(Select, this.bind(attrs));
-    } else if (type === 'string') {
+    } if (type === 'string') {
       if (field.format === 'date-time') {
         delete attrs.type;
         delete attrs.format;
@@ -209,11 +216,11 @@ export default class Form {
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(TextInput, this.bind(attrs));
-    } else if (type === 'number' || type === 'integer') {
+    } if (type === 'number' || type === 'integer') {
       attrs.floatingLabel = true;
       delete attrs.type;
       return m(NumInput, this.bind(attrs));
-    } else if (type === 'boolean') {
+    } if (type === 'boolean') {
       attrs.checked = this.data[key] || false;
       attrs.onChange = ({ checked }) => {
         this.data[key] = checked;

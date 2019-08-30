@@ -1,3 +1,4 @@
+/* eslint max-classes-per-file: ['error', 2] */
 import m from 'mithril';
 import Stream from 'mithril/stream';
 import {

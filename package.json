@@ -14,20 +14,18 @@
   },
   "author": "Hermann Blum",
   "dependencies": {
-    "ajv": "^5.5.0",
-    "mithril": "^1.1.6",
-    "mithril-infinite": "^1.2.4",
-    "polythene-core-css": "^1.2.0",
-    "polythene-css": "^1.2.0",
-    "polythene-mithril": "^1.2.0",
-    "querystring": "^0.2.0",
-    "@material/select": "^0.35.1"
+    "ajv": "^6.10.2",
+    "mithril": "^2.0.4",
+    "mithril-infinite": "^1.2.8",
+    "polythene-css": "^1.5.5",
+    "polythene-mithril": "^1.5.5",
+    "@material/select": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-import-resolver-webpack": "^0.9.0",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-import": "^2.18.2"
   }
 }

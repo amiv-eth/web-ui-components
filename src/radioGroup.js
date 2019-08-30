@@ -17,11 +17,13 @@ export default class RadioGroup {
   constructor(vnode) {
     this.value = vnode.attrs.value || vnode.attrs.default;
   }
+
   onupdate(vnode) {
     if (vnode.attrs.value && vnode.attrs.value !== this.value) {
       this.value = vnode.attrs.value;
     }
   }
+
   view(vnode) {
     const buttons = [];
     vnode.attrs.values.forEach((option, index) => {

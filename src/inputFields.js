@@ -1,3 +1,4 @@
+/* eslint max-classes-per-file: ['error', 4] */
 import m from 'mithril';
 import { TextField } from 'polythene-mithril';
 

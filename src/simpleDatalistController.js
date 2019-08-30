@@ -41,4 +41,3 @@ export default class SimpleDatalistController extends DatalistController {
     this.search = search;
   }
 }
-

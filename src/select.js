@@ -1,6 +1,6 @@
 import m from 'mithril';
+import { MDCSelect } from '@material/select';
 import '@material/select/dist/mdc.select.css';
-import '@material/select/dist/mdc.select';
 
 export default class Select {
   /**
@@ -17,10 +17,9 @@ export default class Select {
    * @param {string}   attrs.value    Selected value
    */
 
-  // Change until we figure out what fails when enabeling the js component
-  // oncreate({ dom }) {
-  //   this.foo = new MDCSelect(dom.querySelector(`#${this.name}`));
-  // }
+  oncreate({ dom }) {
+    this.mdcSelect = new MDCSelect(dom.querySelector(`#${this.name}`));
+  }
 
   view({
     attrs: { options, name, label = '', onChange = () => {}, getErrors = () => [], ...kwargs },
@@ -42,8 +41,12 @@ export default class Select {
           id: name,
           'aria-controls': `${name}-helper-text`,
           'aria-describedby': `${name}-helper-text`,
+          style: {
+            backgroundColor: 'transparent',
+          },
         },
         [
+          m('i.mdc-select__dropdown-icon'),
           m(
             'select.mdc-select__native-control',
             {
@@ -55,7 +58,7 @@ export default class Select {
             },
             [
               m.trust('<option value="" disabled selected></option>'),
-              ...options.map(option => m('option', { value: option }, option)),
+              ...options.map((option) => m('option', { value: option }, option)),
             ],
           ),
           m(
@@ -75,7 +78,7 @@ export default class Select {
         'p.pe-textfield-error',
         {
           id: `${name}-helper-text`,
-          style: { color: 'rgba(221, 44, 0, 1)', 'font-size': '12px' },
+          style: { color: 'rgba(221, 44, 0, 1)', 'font-size': '12px', margin: '6px 0 0' },
         },
         getErrors(),
       ),

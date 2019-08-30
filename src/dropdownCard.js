@@ -29,7 +29,7 @@ export default class DropdownCard {
       expanded,
       separated,
       header: toolbar,
-      content: m('div', children.map(child => m(
+      content: m('div', children.map((child) => m(
         'div', {
           style: {
             padding: '0 10px 10px 10px',

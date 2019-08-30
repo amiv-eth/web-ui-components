@@ -38,8 +38,8 @@ export default class DatalistController {
   infiniteScrollParams(item) {
     return {
       item,
-      pageData: pageNum => this.getPageData(pageNum),
-      pageKey: pageNum => `${pageNum}-${this.stateCounter()}`,
+      pageData: (pageNum) => this.getPageData(pageNum),
+      pageKey: (pageNum) => `${pageNum}-${this.stateCounter()}`,
       maxPages: this.totalPages ? this.totalPages : undefined,
     };
   }
@@ -90,12 +90,12 @@ export default class DatalistController {
             this.getPageData(pageNum).then((newPage) => {
               pages[pageNum] = newPage;
               // look if all pages were collected
-              const missingPages = Array.from(new Array(totalPages), (x, i) => i + 1).filter(i =>
-                !(i in pages));
+              const missingPages = Array.from(new Array(totalPages), (x, i) => i + 1)
+                .filter((i) => !(i in pages));
               if (missingPages.length === 0) {
                 // collect all the so-far loaded pages in order (sorted keys)
                 // and flatten them into 1 array
-                resolve([].concat(...Object.keys(pages).sort().map(key => pages[key])));
+                resolve([].concat(...Object.keys(pages).sort().map((key) => pages[key])));
               }
             });
           });
@@ -130,4 +130,3 @@ export default class DatalistController {
     this.refresh();
   }
 }
-
