@@ -27,7 +27,8 @@ export default class Select {
     this.mdcSelect = new MDCSelect(dom.querySelector(`#${this.name}`));
   }
 
-  onupdate({ attrs: { value } }) {
+  onupdate({ attrs: { disabled = false, value } }) {
+    this.mdcSelect.disabled = disabled;
     this.mdcSelect.value = value;
   }
 
